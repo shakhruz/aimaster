@@ -21,10 +21,22 @@ const defaultStatuses: Record<number, ModuleStatus> = {
   10: 'locked',
 }
 
-const levelColors: Record<string, string> = {
-  master: '#68d391',
-  expert: '#63b3ed',
-  leader: '#f6ad55',
+const levelAccents: Record<string, { color: string; glow: string; shadow: string }> = {
+  master: {
+    color: '#00d4ff',
+    glow: 'rgba(0, 212, 255, 0.3)',
+    shadow: '0 0 30px rgba(0, 212, 255, 0.2)',
+  },
+  expert: {
+    color: '#9b59ff',
+    glow: 'rgba(155, 89, 255, 0.3)',
+    shadow: '0 0 30px rgba(155, 89, 255, 0.2)',
+  },
+  leader: {
+    color: '#39ff85',
+    glow: 'rgba(57, 255, 133, 0.3)',
+    shadow: '0 0 30px rgba(57, 255, 133, 0.2)',
+  },
 }
 
 export default function HomePage() {
@@ -32,6 +44,7 @@ export default function HomePage() {
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+
       {/* HERO */}
       <section
         id="hero"
@@ -41,102 +54,160 @@ export default function HomePage() {
           position: 'relative',
         }}
       >
-        {/* Glow */}
+        {/* Background glow orbs */}
         <div
           style={{
             position: 'absolute',
-            top: '40%',
+            top: '10%',
             left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(104,211,145,0.08) 0%, transparent 70%)',
+            transform: 'translateX(-50%)',
+            width: '500px',
+            height: '300px',
+            background: 'radial-gradient(ellipse, rgba(0, 212, 255, 0.06) 0%, rgba(155, 89, 255, 0.04) 50%, transparent 70%)',
             pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '20%',
+            width: '300px',
+            height: '200px',
+            background: 'radial-gradient(ellipse, rgba(57, 255, 133, 0.04) 0%, transparent 70%)',
+            pointerEvents: 'none',
+            zIndex: 0,
           }}
         />
 
+        {/* Badge */}
         <div
+          className="animate-badge-pulse"
           style={{
-            display: 'inline-block',
-            background: 'rgba(104,211,145,0.1)',
-            border: '1px solid rgba(104,211,145,0.3)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'rgba(0, 212, 255, 0.08)',
+            border: '1px solid rgba(0, 212, 255, 0.3)',
             borderRadius: '100px',
-            padding: '6px 16px',
-            fontSize: '13px',
-            color: '#68d391',
-            marginBottom: '24px',
-            fontWeight: '500',
+            padding: '7px 18px',
+            fontSize: '12px',
+            color: '#00d4ff',
+            marginBottom: '28px',
+            fontWeight: '600',
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
-          ⚡ OpenClaw + Claude · Master → Expert → Leader
+          <span style={{ display: 'inline-block', animation: 'pulse-glow 1.5s ease-in-out infinite' }}>⚡</span>
+          OpenClaw + Claude · Master → Expert → Leader
         </div>
 
+        {/* Main title */}
         <h1
           style={{
-            fontSize: 'clamp(40px, 8vw, 72px)',
+            fontSize: 'clamp(48px, 9vw, 84px)',
             fontWeight: '900',
-            letterSpacing: '-2px',
-            lineHeight: '1.05',
-            marginBottom: '20px',
-            background: 'linear-gradient(135deg, var(--text) 0%, #68d391 100%)',
+            letterSpacing: '-0.02em',
+            lineHeight: '1.0',
+            marginBottom: '24px',
+            fontFamily: 'var(--font-orbitron, sans-serif)',
+            background: 'linear-gradient(135deg, #00d4ff 0%, #9b59ff 60%, #39ff85 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
+            position: 'relative',
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.3))',
           }}
         >
           {t(lang, 'hero.title')}
         </h1>
 
+        {/* Subtitle */}
         <p
           style={{
-            fontSize: 'clamp(20px, 3vw, 28px)',
+            fontSize: 'clamp(18px, 3vw, 26px)',
             fontWeight: '600',
             color: 'var(--text)',
             marginBottom: '16px',
+            position: 'relative',
+            zIndex: 1,
+            textShadow: '0 0 20px rgba(0, 212, 255, 0.3)',
           }}
         >
           {t(lang, 'hero.subtitle')}
         </p>
 
+        {/* Description */}
         <p
           style={{
             fontSize: '16px',
-            color: 'var(--text-muted)',
+            color: 'var(--text-secondary)',
             maxWidth: '520px',
-            margin: '0 auto 40px',
-            lineHeight: '1.6',
+            margin: '0 auto 44px',
+            lineHeight: '1.7',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           {t(lang, 'hero.description')}
         </p>
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+        {/* CTA */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '16px',
+            flexWrap: 'wrap',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
           <a
             href="#modules"
-            className="pulse-glow"
             style={{
-              background: 'var(--accent)',
-              color: '#0f1117',
-              padding: '14px 32px',
+              background: 'linear-gradient(135deg, #00d4ff, #9b59ff)',
+              color: '#070b14',
+              padding: '14px 36px',
               borderRadius: '12px',
-              fontWeight: '700',
+              fontWeight: '800',
               fontSize: '16px',
               textDecoration: 'none',
-              transition: 'all 0.2s',
+              transition: 'all 0.3s',
               display: 'inline-block',
+              boxShadow: '0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(155, 89, 255, 0.2)',
+              letterSpacing: '0.02em',
+              fontFamily: 'var(--font-orbitron, sans-serif)',
             }}
             onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.transform = 'scale(1.03)'
-              ;(e.currentTarget as HTMLAnchorElement).style.background = 'var(--accent-dark)'
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.transform = 'translateY(-3px) scale(1.02)'
+              el.style.boxShadow = '0 0 35px rgba(0, 212, 255, 0.7), 0 0 60px rgba(155, 89, 255, 0.4)'
             }}
             onMouseLeave={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.transform = 'scale(1)'
-              ;(e.currentTarget as HTMLAnchorElement).style.background = 'var(--accent)'
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.transform = 'translateY(0) scale(1)'
+              el.style.boxShadow = '0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(155, 89, 255, 0.2)'
             }}
           >
             {t(lang, 'hero.cta')} →
           </a>
-          <span style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
+          <span
+            style={{
+              color: 'var(--text-muted)',
+              fontSize: '13px',
+              border: '1px solid rgba(0, 212, 255, 0.15)',
+              padding: '6px 14px',
+              borderRadius: '8px',
+              background: 'rgba(0, 212, 255, 0.03)',
+            }}
+          >
             {t(lang, 'hero.ctaSub')}
           </span>
         </div>
@@ -147,8 +218,10 @@ export default function HomePage() {
             display: 'flex',
             justifyContent: 'center',
             gap: '40px',
-            marginTop: '60px',
+            marginTop: '64px',
             flexWrap: 'wrap',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           {[
@@ -157,29 +230,63 @@ export default function HomePage() {
             { num: '∞', label: lang === 'ru' ? 'Возможностей' : 'Possibilities' },
           ].map((stat) => (
             <div key={stat.num} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '36px', fontWeight: '800', color: 'var(--accent)' }}>
+              <div
+                style={{
+                  fontSize: '42px',
+                  fontWeight: '900',
+                  color: '#00d4ff',
+                  fontFamily: 'var(--font-orbitron, sans-serif)',
+                  textShadow: '0 0 20px rgba(0, 212, 255, 0.6)',
+                  animation: 'glow-text 3s ease-in-out infinite',
+                  lineHeight: '1.1',
+                }}
+              >
                 {stat.num}
               </div>
-              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{stat.label}</div>
+              <div
+                style={{
+                  fontSize: '12px',
+                  color: 'var(--text-muted)',
+                  marginTop: '4px',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {stat.label}
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Divider line */}
+        <div
+          style={{
+            marginTop: '60px',
+            height: '1px',
+            background: 'linear-gradient(to right, transparent, rgba(0, 212, 255, 0.3), rgba(155, 89, 255, 0.3), transparent)',
+          }}
+        />
       </section>
 
       {/* LEVELS */}
       <section id="levels" style={{ padding: '60px 24px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
           <h2
             style={{
               fontSize: 'clamp(28px, 5vw, 42px)',
               fontWeight: '800',
-              letterSpacing: '-1px',
+              letterSpacing: '-0.5px',
               marginBottom: '12px',
+              fontFamily: 'var(--font-orbitron, sans-serif)',
+              background: 'linear-gradient(135deg, var(--text) 0%, #a0c4ff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
             }}
           >
             {t(lang, 'levels.title')}
           </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
             {t(lang, 'levels.subtitle')}
           </p>
         </div>
@@ -191,105 +298,158 @@ export default function HomePage() {
             gap: '20px',
           }}
         >
-          {levels.map((level, idx) => (
-            <div
-              key={level.id}
-              style={{
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border)',
-                borderRadius: '16px',
-                padding: '28px 24px',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                ;(e.currentTarget as HTMLDivElement).style.borderColor = level.color
-                ;(e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)'
-              }}
-              onMouseLeave={(e) => {
-                ;(e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)'
-                ;(e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)'
-              }}
-            >
-              {/* Step number */}
+          {levels.map((level, idx) => {
+            const accent = levelAccents[level.id] || levelAccents.master
+            return (
               <div
+                key={level.id}
                 style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: `${level.color}20`,
-                  color: level.color,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '13px',
-                  fontWeight: '700',
+                  background: 'rgba(13, 21, 38, 0.8)',
+                  border: `1px solid ${accent.glow}`,
+                  borderRadius: '16px',
+                  padding: '28px 24px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = accent.color
+                  el.style.transform = 'translateY(-6px)'
+                  el.style.boxShadow = accent.shadow
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = accent.glow
+                  el.style.transform = 'translateY(0)'
+                  el.style.boxShadow = 'none'
                 }}
               >
-                {idx + 1}
+                {/* Background glow */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: `radial-gradient(ellipse at top left, ${accent.glow.replace('0.3', '0.06')} 0%, transparent 60%)`,
+                    pointerEvents: 'none',
+                  }}
+                />
+
+                {/* Step number */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: `${accent.glow.replace('0.3', '0.15')}`,
+                    border: `1px solid ${accent.color}40`,
+                    color: accent.color,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px',
+                    fontWeight: '800',
+                    fontFamily: 'var(--font-orbitron, sans-serif)',
+                  }}
+                >
+                  {idx + 1}
+                </div>
+
+                {/* Icon */}
+                <div
+                  style={{
+                    fontSize: '44px',
+                    marginBottom: '16px',
+                    position: 'relative',
+                    zIndex: 1,
+                    filter: `drop-shadow(0 0 12px ${accent.color}80)`,
+                    display: 'inline-block',
+                    animation: 'float 4s ease-in-out infinite',
+                    animationDelay: `${idx * 0.5}s`,
+                  }}
+                >
+                  {level.icon}
+                </div>
+
+                {/* Title */}
+                <h3
+                  style={{
+                    fontSize: '22px',
+                    fontWeight: '800',
+                    color: accent.color,
+                    marginBottom: '10px',
+                    letterSpacing: '0.03em',
+                    fontFamily: 'var(--font-orbitron, sans-serif)',
+                    textShadow: `0 0 15px ${accent.glow}`,
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
+                >
+                  {level.title[lang]}
+                </h3>
+
+                {/* Description */}
+                <p
+                  style={{
+                    fontSize: '14px',
+                    color: 'var(--text-secondary)',
+                    lineHeight: '1.6',
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
+                >
+                  {level.description[lang]}
+                </p>
+
+                {/* Progress dots */}
+                <div style={{ display: 'flex', gap: '6px', marginTop: '20px', position: 'relative', zIndex: 1 }}>
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: i <= idx ? '20px' : '6px',
+                        height: '6px',
+                        borderRadius: '3px',
+                        background: i <= idx ? accent.color : 'rgba(0, 212, 255, 0.1)',
+                        transition: 'all 0.3s',
+                        boxShadow: i <= idx ? `0 0 6px ${accent.glow}` : 'none',
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
-
-              <div style={{ fontSize: '40px', marginBottom: '16px' }}>{level.icon}</div>
-
-              <h3
-                style={{
-                  fontSize: '22px',
-                  fontWeight: '800',
-                  color: level.color,
-                  marginBottom: '8px',
-                  letterSpacing: '-0.5px',
-                }}
-              >
-                {level.title[lang]}
-              </h3>
-
-              <p
-                style={{
-                  fontSize: '14px',
-                  color: 'var(--text-muted)',
-                  lineHeight: '1.6',
-                }}
-              >
-                {level.description[lang]}
-              </p>
-
-              {/* Progress dots */}
-              <div style={{ display: 'flex', gap: '4px', marginTop: '20px' }}>
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: '6px',
-                      height: '6px',
-                      borderRadius: '50%',
-                      background: i <= idx ? level.color : 'var(--border)',
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </section>
 
       {/* MODULES */}
       <section id="modules" style={{ padding: '60px 24px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
           <h2
             style={{
               fontSize: 'clamp(28px, 5vw, 42px)',
               fontWeight: '800',
-              letterSpacing: '-1px',
+              letterSpacing: '-0.5px',
               marginBottom: '12px',
+              fontFamily: 'var(--font-orbitron, sans-serif)',
+              background: 'linear-gradient(135deg, var(--text) 0%, #a0c4ff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
             }}
           >
             {t(lang, 'modules.title')}
           </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
             {t(lang, 'modules.subtitle')}
           </p>
         </div>
@@ -298,36 +458,50 @@ export default function HomePage() {
         {(['master', 'expert', 'leader'] as const).map((levelId) => {
           const levelModules = modules.filter((m) => m.level === levelId)
           const levelInfo = levels.find((l) => l.id === levelId)!
+          const accent = levelAccents[levelId]
           return (
-            <div key={levelId} style={{ marginBottom: '40px' }}>
+            <div key={levelId} style={{ marginBottom: '48px' }}>
+              {/* Level header */}
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
-                  marginBottom: '16px',
-                  paddingBottom: '12px',
-                  borderBottom: `2px solid ${levelColors[levelId]}30`,
+                  gap: '12px',
+                  marginBottom: '20px',
+                  paddingBottom: '14px',
+                  borderBottom: `1px solid ${accent.glow}`,
                 }}
               >
-                <span style={{ fontSize: '20px' }}>{levelInfo.icon}</span>
+                <span
+                  style={{
+                    fontSize: '22px',
+                    filter: `drop-shadow(0 0 8px ${accent.color}80)`,
+                  }}
+                >
+                  {levelInfo.icon}
+                </span>
                 <h3
                   style={{
                     fontSize: '18px',
-                    fontWeight: '700',
-                    color: levelColors[levelId],
+                    fontWeight: '800',
+                    color: accent.color,
+                    fontFamily: 'var(--font-orbitron, sans-serif)',
+                    textShadow: `0 0 12px ${accent.glow}`,
+                    letterSpacing: '0.05em',
                   }}
                 >
                   {levelInfo.title[lang]}
                 </h3>
                 <span
                   style={{
-                    fontSize: '12px',
-                    color: 'var(--text-muted)',
-                    background: 'var(--bg-card)',
-                    padding: '2px 8px',
+                    fontSize: '11px',
+                    color: accent.color,
+                    background: `${accent.color}15`,
+                    padding: '3px 10px',
                     borderRadius: '100px',
-                    border: '1px solid var(--border)',
+                    border: `1px solid ${accent.color}30`,
+                    fontWeight: '600',
+                    letterSpacing: '0.05em',
                   }}
                 >
                   {levelModules.length} {lang === 'ru' ? 'мод.' : 'mod.'}
@@ -353,61 +527,121 @@ export default function HomePage() {
           )
         })}
 
-        {/* CTA */}
+        {/* CTA Section */}
         <div
           id="about"
           style={{
             textAlign: 'center',
             marginTop: '60px',
-            padding: '40px 24px',
-            background: 'var(--bg-card)',
+            padding: '48px 32px',
+            background: 'rgba(13, 21, 38, 0.8)',
             borderRadius: '20px',
-            border: '1px solid rgba(104,211,145,0.2)',
+            border: '1px solid rgba(0, 212, 255, 0.2)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚀</div>
+          {/* Glow orbs */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-50%',
+              left: '-10%',
+              width: '300px',
+              height: '300px',
+              background: 'radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-50%',
+              right: '-10%',
+              width: '300px',
+              height: '300px',
+              background: 'radial-gradient(circle, rgba(155, 89, 255, 0.05) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }}
+          />
+
+          <div
+            style={{
+              fontSize: '56px',
+              marginBottom: '20px',
+              display: 'inline-block',
+              animation: 'float 3s ease-in-out infinite',
+              filter: 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.5))',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            🚀
+          </div>
+
           <h3
             style={{
-              fontSize: '24px',
+              fontSize: '28px',
               fontWeight: '800',
-              marginBottom: '12px',
-              letterSpacing: '-0.5px',
+              marginBottom: '14px',
+              fontFamily: 'var(--font-orbitron, sans-serif)',
+              background: 'linear-gradient(135deg, #00d4ff, #9b59ff)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              position: 'relative',
+              zIndex: 1,
             }}
           >
             {lang === 'ru' ? 'Готов начать?' : 'Ready to start?'}
           </h3>
+
           <p
             style={{
-              color: 'var(--text-muted)',
+              color: 'var(--text-secondary)',
               fontSize: '15px',
-              marginBottom: '28px',
-              maxWidth: '400px',
-              margin: '0 auto 28px',
-              lineHeight: '1.6',
+              marginBottom: '32px',
+              maxWidth: '420px',
+              margin: '0 auto 32px',
+              lineHeight: '1.7',
+              position: 'relative',
+              zIndex: 1,
             }}
           >
             {lang === 'ru'
               ? 'Установи OpenClaw, подключи Claude — и ты уже на пути к AI Master.'
-              : 'Install OpenClaw, connect Claude — and you\'re already on your way to AI Master.'}
+              : "Install OpenClaw, connect Claude — and you're already on your way to AI Master."}
           </p>
+
           <a
             href="#modules"
             style={{
-              background: 'var(--accent)',
-              color: '#0f1117',
-              padding: '14px 32px',
+              background: 'linear-gradient(135deg, #00d4ff, #9b59ff)',
+              color: '#070b14',
+              padding: '14px 36px',
               borderRadius: '12px',
-              fontWeight: '700',
+              fontWeight: '800',
               fontSize: '16px',
               textDecoration: 'none',
               display: 'inline-block',
-              transition: 'all 0.2s',
+              transition: 'all 0.3s',
+              boxShadow: '0 0 20px rgba(0, 212, 255, 0.5)',
+              fontFamily: 'var(--font-orbitron, sans-serif)',
+              letterSpacing: '0.05em',
+              position: 'relative',
+              zIndex: 1,
             }}
             onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.transform = 'scale(1.03)'
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.transform = 'translateY(-3px) scale(1.02)'
+              el.style.boxShadow = '0 0 35px rgba(0, 212, 255, 0.7), 0 0 60px rgba(155, 89, 255, 0.4)'
             }}
             onMouseLeave={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.transform = 'scale(1)'
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.transform = 'translateY(0) scale(1)'
+              el.style.boxShadow = '0 0 20px rgba(0, 212, 255, 0.5)'
             }}
           >
             {t(lang, 'hero.cta')} →
@@ -419,16 +653,28 @@ export default function HomePage() {
       <footer
         style={{
           textAlign: 'center',
-          padding: '32px 24px',
-          borderTop: '1px solid var(--border)',
+          padding: '36px 24px',
+          borderTop: '1px solid rgba(0, 212, 255, 0.1)',
           color: 'var(--text-muted)',
           fontSize: '13px',
+          letterSpacing: '0.03em',
         }}
       >
         <div style={{ marginBottom: '8px' }}>
-          {t(lang, 'footer.made')} ❤️ OpenClaw + Claude
+          <span style={{ color: 'var(--text-secondary)' }}>
+            {t(lang, 'footer.made')}
+          </span>
+          {' '}
+          <span style={{ color: '#00d4ff', textShadow: '0 0 8px rgba(0, 212, 255, 0.5)' }}>
+            ❤️ OpenClaw + Claude
+          </span>
         </div>
-        <div>© 2025 AI Master. {t(lang, 'footer.rights')}</div>
+        <div style={{ color: 'var(--text-muted)' }}>
+          © 2025 AI Master.{' '}
+          <span style={{ color: 'rgba(155, 89, 255, 0.7)' }}>
+            {t(lang, 'footer.rights')}
+          </span>
+        </div>
       </footer>
     </div>
   )
