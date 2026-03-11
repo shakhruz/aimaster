@@ -1,6 +1,6 @@
 'use client'
 
-import { useApp } from '@/app/layout'
+import { useApp } from '@/lib/context'
 
 export default function LangToggle() {
   const { lang, setLang } = useApp()

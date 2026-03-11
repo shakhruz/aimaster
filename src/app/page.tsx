@@ -1,6 +1,6 @@
 'use client'
 
-import { useApp } from './layout'
+import { useApp } from '@/lib/context'
 import { t } from '@/lib/i18n'
 import { modules, levels } from '@/lib/modules'
 import ModuleCard from '@/components/ModuleCard'

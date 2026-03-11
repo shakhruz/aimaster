@@ -1,7 +1,7 @@
 'use client'
 
 import { Module, ModuleStatus } from '@/types'
-import { useApp } from '@/app/layout'
+import { useApp } from '@/lib/context'
 import { t } from '@/lib/i18n'
 
 interface ModuleCardProps {

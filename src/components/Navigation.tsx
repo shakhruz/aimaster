@@ -1,6 +1,6 @@
 'use client'
 
-import { useApp } from '@/app/layout'
+import { useApp } from '@/lib/context'
 import { t } from '@/lib/i18n'
 import ThemeToggle from './ThemeToggle'
 import LangToggle from './LangToggle'
